@@ -1,0 +1,4 @@
+title fullstackopen0.6
+
+Browser->Server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+Server-->Browser: {"message":"note created"} [201]

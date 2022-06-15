@@ -50,14 +50,16 @@ const App = () => {
 
     personService
       .deletePerson(personToDelete.id)
-      .then(deletedPerson => console.log(deletedPerson))
-    
-    let updatedFilteredPersons = filteredPersons.filter(person => person.id !== personToDelete.id)
-    setFilteredPersons(updatedFilteredPersons)
-    setMessage(`Deleted ${personToDelete.name}`)
-    setTimeout(() => {
-      setMessage(null)
-    }, 5000)
+      .then(result => {
+        let updatedFilteredPersons = filteredPersons.filter(person => person.id !== personToDelete.id)
+        let updatedPersons = persons.filter(person => person.id !== personToDelete.id)
+        setFilteredPersons(updatedFilteredPersons)
+        setPersons(updatedPersons)
+        setMessage(`Deleted ${personToDelete.name}`)
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
+      })
   }
 
   const addPerson = (event) => {
@@ -83,7 +85,7 @@ const App = () => {
             setTimeout(() => setMessage(null), 5000)
           })
           .catch(error => {
-            setMessage(`Information of ${personToChange.name} has already been removed from the server.`)
+            setMessage(error.response.data.error)
             setTimeout(() => {
               setMessage(null)
             }, 5000)
@@ -96,14 +98,22 @@ const App = () => {
     }
 
     if(newName !== '' && newNumber !== '') {
-      setPersons([...persons, newPerson])
-      if(filter === '' || newName.toLowerCase().includes(filter.toLowerCase())) {
-        setFilteredPersons([...filteredPersons, newPerson])
-      }
-      setNewName('')
-      setNewNumber('')
-      setMessage(`Added ${newPerson.name}`)
-      setTimeout(() => setMessage(null), 5000)
+      personService
+        .addPerson(newPerson)
+        .then(newPerson => {
+          setPersons([...persons, newPerson])
+          if(filter === '' || newName.toLowerCase().includes(filter.toLowerCase())) {
+            setFilteredPersons([...filteredPersons, newPerson])
+          }
+          setNewName('')
+          setNewNumber('')
+          setMessage(`Added ${newPerson.name}`)
+          setTimeout(() => setMessage(null), 5000)
+        })
+        .catch(error => {
+          setMessage(error.response.data.error)
+          setTimeout(() => setMessage(null), 5000)
+        })
     }
   }
 

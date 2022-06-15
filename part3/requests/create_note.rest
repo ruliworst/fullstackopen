@@ -1,0 +1,7 @@
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+  "content": "Doing an HTTP POST Request from REST Client",
+  "important": false
+}

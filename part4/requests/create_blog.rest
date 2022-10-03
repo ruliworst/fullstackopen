@@ -1,0 +1,10 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Doing an HTTP GET Request from REST Client",
+  "author": "Ruliiiiiiiiworst",
+  "url": "http://www.myblog.com/",
+  "likes": 100,
+  "user": "62e2a7cc87a6a808e9798993"
+}

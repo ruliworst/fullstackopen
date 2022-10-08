@@ -10,7 +10,6 @@ const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const app = express()
 
-
 mongoose.connect(config.MONGODB_URI)
   .then(() => {
     logger.info('connected to MongoDB')
@@ -27,5 +26,10 @@ app.use('/api/users', usersRouter)
 
 app.use(middleware.tokenExtractor)
 app.use('/api/blogs', middleware.userExtractor, blogsRouter)
+
+if (process.env.NODE_ENV === 'test') {
+  const testingRouter = require('./controllers/testing')
+  app.use('/api/testing', testingRouter)
+}
 
 module.exports = app

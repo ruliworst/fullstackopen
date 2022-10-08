@@ -23,8 +23,9 @@ blogsRouter.post('/', async (request, response) => {
       user: user.id
     })
 
-    const savedBlog = await blog.save()
+    let savedBlog = await blog.save()
 
+    savedBlog = await savedBlog.populate('user')
     return response.status(201).json(savedBlog)
   } catch (err) {
     return response.status(400).json({ error: err.message })

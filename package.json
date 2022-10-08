@@ -4,6 +4,7 @@
     "express": "^4.17.3"
   },
   "devDependencies": {
+    "cypress": "^10.9.0",
     "nodemon": "^2.0.15",
     "supertest": "^6.2.4"
   }
